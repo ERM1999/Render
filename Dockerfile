@@ -17,4 +17,4 @@ EXPOSE 8080
 # ENTRYPOINT mejorado:
 # 1. Silenciamos el error de Hazelcast
 # 2. Forzamos la ruta raíz "/"
-ENTRYPOINT ["java", "-Dhz.network.rest-api.enabled=false", "-jar", "/opt/payara/payara-micro.jar", "--deploy", "/opt/payara/deployments/app.war", "--contextroot", "/"]
+ENTRYPOINT ["java", "-jar", "/opt/payara/payara-micro.jar", "--deploy", "/opt/payara/deployments/app.war", "--contextroot", "/", "--nocluster"]
