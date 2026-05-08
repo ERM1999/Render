@@ -12,4 +12,5 @@ FROM payara/micro:6.2023.10
 COPY --from=build /app/target/ROOT.war ${DEPLOY_DIR}
 
 # Comando de ejecución
-ENTRYPOINT ["java", "-jar", "/opt/payara/payara-micro.jar", "--deploy", "/opt/payara/deployments/ROOT.war", "--contextroot", "/"]
+
+ENTRYPOINT ["java", "-jar", "/opt/payara/payara-micro.jar", "--port", "10000", "--deploy", "/opt/payara/deployments/ROOT.war", "--contextroot", "/"]
