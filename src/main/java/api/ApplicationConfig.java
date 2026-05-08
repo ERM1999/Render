@@ -28,6 +28,7 @@ public class ApplicationConfig extends Application {
         classes.add(MonitorResource.class);
         classes.add(JwtFilter.class);
         classes.add(CorsFilter.class);
+        //
 
         return classes;
     }
