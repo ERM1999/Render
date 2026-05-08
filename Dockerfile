@@ -9,8 +9,7 @@ FROM payara/micro:6.2023.10
 
 # COPIA el archivo generado a la carpeta de despliegue de Payara
 # El nombre debe coincidir con el <finalName> de tu pom.xml
-COPY --from=build /app/target/ROOT.war ${DEPLOY_DIR}
+COPY --from=build /app/target/ROOT.war /opt/payara/deployments/ROOT.war
 
-# Comando de ejecución
-
+# 2. Cambiamos el comando para que apunte directamente al archivo con su ruta completa
 ENTRYPOINT ["java", "-jar", "/opt/payara/payara-micro.jar", "--port", "10000", "--deploy", "/opt/payara/deployments/ROOT.war", "--contextroot", "/"]
