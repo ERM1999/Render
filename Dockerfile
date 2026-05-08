@@ -1,20 +1,15 @@
-# ETAPA 1: Compilar
-FROM maven:3.8.5-openjdk-17 AS build
+# 1. Usamos una imagen de Maven para compilar (opcional si ya subes el war, pero recomendado)
+FROM maven:3.8.4-openjdk-17 AS build
+COPY . /app
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-RUN mvn clean package -DskipTests
+RUN mvn clean package
 
-# ETAPA 2: Ejecutar
-FROM payara/micro:6.2023.10-jdk17
+# 2. Usamos la imagen de Payara Micro
+FROM payara/micro:6.2023.10
 
-# Copiamos el archivo forzando el nombre a 'app.war'
-COPY --from=build /app/target/*.war /opt/payara/deployments/app.war
+# COPIA el archivo generado a la carpeta de despliegue de Payara
+# El nombre debe coincidir con el <finalName> de tu pom.xml
+COPY --from=build /app/target/ROOT.war ${DEPLOY_DIR}
 
-# EXPOSE el puerto
-EXPOSE 8080
-
-# ENTRYPOINT mejorado:
-# 1. Silenciamos el error de Hazelcast
-# 2. Forzamos la ruta raíz "/"
-ENTRYPOINT ["java", "-jar", "/opt/payara/payara-micro.jar", "--deploy", "/opt/payara/deployments/app.war", "--contextroot", "/", "--nocluster"]
+# Comando de ejecución
+ENTRYPOINT ["java", "-jar", "/opt/payara/payara-micro.jar", "--deploy", "/opt/payara/deployments/ROOT.war", "--contextroot", "/"]
