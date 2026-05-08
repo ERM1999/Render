@@ -15,21 +15,6 @@ import resources.VisitanteResource;
 
 @ApplicationPath("/api")
 public class ApplicationConfig extends Application {
-
-    @Override
-    public Set<Class<?>> getClasses() {
-        Set<Class<?>> classes = new HashSet<>();
-
-        classes.add(LoginResource.class);
-        classes.add(ReoResource.class);
-        classes.add(VisitaResource.class);
-        classes.add(IncidenteResource.class);
-        classes.add(VisitanteResource.class);
-        classes.add(MonitorResource.class);
-        classes.add(JwtFilter.class);
-        classes.add(CorsFilter.class);
-        //
-
-        return classes;
-    }
+    // Al dejar la clase vacía, Jakarta EE activa el "Automatic Scanning".
+    // Esto buscará automáticamente LoginResource, ReoResource, JwtFilter, etc.
 }
